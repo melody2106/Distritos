@@ -4,7 +4,7 @@ const DistritoModel = {
   async getAll({ page, limit, search }) {
     const offset = (page - 1) * limit;
     
-    const [results] = await db.query('CALL sp_get_distritos(?, ?, ?)', [search || '', limit, offset]);
+    const [results] = await db.query('CALL sp_get_distritos(?, ?, ?, ?)', [search || '', limit, offset]);
 
     const rows = results[0]; 
     
@@ -22,7 +22,7 @@ const DistritoModel = {
 
   async create({ nom_dis, cod_postal, supervisor, poblacion }) {
     const [result] = await db.query(
-      'CALL sp_insert_distrito(?, ?, ?)',
+      'CALL sp_insert_distrito(?, ?, ?, ?)',
       [nom_dis, cod_postal, supervisor, poblacion]
     );
     return result; 
