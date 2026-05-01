@@ -25,7 +25,6 @@ const DistritoModel = {
       'CALL sp_insert_distrito(?, ?, ?)',
       [nom_dis, cod_postal, supervisor, poblacion]
     );
-    // Ajustado para capturar el ID generado si el SP lo devuelve
     return result; 
   },
 

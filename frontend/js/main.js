@@ -1,7 +1,3 @@
-/**
- * main.js - Gestión de Distritos con Modo Oscuro
- */
-
 const API = '/api/distritos';
 let paginaActual = 1;
 const LIMIT = 8;
@@ -9,27 +5,23 @@ let busqueda = '';
 let timeoutBusqueda;
 let idSeleccionadoParaEliminar = null;
 
-// ── REFERENCIAS AL DOM ─────────────────────────────────────
-const tbody          = document.getElementById('tbody');
-const infoPagina     = document.getElementById('infoPagina');
-const btnAnterior    = document.getElementById('btnAnterior');
-const btnSiguiente   = document.getElementById('btnSiguiente');
-const buscador       = document.getElementById('buscador');
+const tbody = document.getElementById('tbody');
+const infoPagina = document.getElementById('infoPagina');
+const btnAnterior = document.getElementById('btnAnterior');
+const btnSiguiente = document.getElementById('btnSiguiente');
+const buscador = document.getElementById('buscador');
 
-// Modales
-const modalEditar    = document.getElementById('modal');
-const modalEliminar  = document.getElementById('modal-eliminar');
+const modalEditar = document.getElementById('modal');
+const modalEliminar = document.getElementById('modal-eliminar');
 
-// Botones de acción en modales
-const btnGuardar     = document.getElementById('btnGuardar');
-const btnCancelar    = document.getElementById('btnCancelar');
+const btnGuardar = document.getElementById('btnGuardar');
+const btnCancelar = document.getElementById('btnCancelar');
 const btnConfEliminar = document.getElementById('confirmar-eliminar');
 const btnCancEliminar = document.getElementById('cancelar-eliminar');
 
-// ── LÓGICA MODO OSCURO ─────────────────────────────────────
 const themeToggle = document.getElementById('theme-toggle');
-const themeIcon   = document.getElementById('theme-icon');
-const themeText   = document.getElementById('theme-text');
+const themeIcon = document.getElementById('theme-icon');
+const themeText = document.getElementById('theme-text');
 
 function aplicarTema(tema) {
     if (tema === 'dark') {
@@ -43,7 +35,6 @@ function aplicarTema(tema) {
     }
 }
 
-// Inicializar tema desde localStorage
 const temaGuardado = localStorage.getItem('theme') || 'light';
 aplicarTema(temaGuardado);
 
@@ -56,7 +47,6 @@ if (themeToggle) {
     });
 }
 
-// ── CARGAR TABLA ──────────────────────────────────────────
 async function cargarTabla() {
     try {
         const url = `${API}?page=${paginaActual}&limit=${LIMIT}&search=${encodeURIComponent(busqueda)}`;
@@ -66,16 +56,18 @@ async function cargarTabla() {
         tbody.innerHTML = '';
 
         if (!json.data || json.data.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 40px; color: var(--text-muted);">No se encontraron distritos</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 40px; color: var(--text-muted);">No se encontraron distritos</td></tr>';
         } else {
             json.data.forEach(d => {
+                const poblacionFormateada = Number(d.poblacion).toLocaleString('en-US');
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>#${d.id_dis}</strong></td>
                     <td>${d.nom_dis}</td>
                     <td><code>${d.cod_postal}</code></td>
                     <td>${d.supervisor || 'Sin asignar'}</td>
-                    <td>${d.poblacion}</td>
+                    <td>${poblacionFormateada}</td> 
                     <td style="text-align: center;">
                         <button class="btn btn-edit" onclick="abrirEditar(${d.id_dis}, '${d.nom_dis}', '${d.cod_postal}', '${d.supervisor}', '${d.poblacion}')">
                             ✏️ Editar
@@ -97,7 +89,6 @@ async function cargarTabla() {
     }
 }
 
-// ── PAGINACIÓN ────────────────────────────────────────────
 btnAnterior.addEventListener('click', () => {
     if (paginaActual > 1) { 
         paginaActual--; 
@@ -110,7 +101,6 @@ btnSiguiente.addEventListener('click', () => {
     cargarTabla();
 });
 
-// ── BUSCADOR (Debounce) ───────────────────────────────────
 buscador.addEventListener('input', () => {
     clearTimeout(timeoutBusqueda);
     timeoutBusqueda = setTimeout(() => {
@@ -120,7 +110,6 @@ buscador.addEventListener('input', () => {
     }, 400);
 });
 
-// ── LÓGICA DE EDICIÓN ─────────────────────────────────────
 window.abrirEditar = (id, nom, cod, supervisor, poblacion) => {
     document.getElementById('edit-id').value = id;
     document.getElementById('edit-nom').value = nom;
@@ -150,7 +139,12 @@ btnGuardar.addEventListener('click', async () => {
         const res = await fetch(`${API}/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nom_dis: nom, cod_postal: cod, supervisor: supervisor, poblacion:poblacion })
+            body: JSON.stringify({ 
+                nom_dis: nom, 
+                cod_postal: cod, 
+                supervisor: supervisor, 
+                poblacion: parseInt(poblacion) 
+            })
         });
         const json = await res.json();
         if (json.success) {
@@ -164,7 +158,6 @@ btnGuardar.addEventListener('click', async () => {
     }
 });
 
-// ── LÓGICA DE ELIMINACIÓN ─────────────────────────────────
 window.prepararEliminar = (id) => {
     idSeleccionadoParaEliminar = id;
     modalEliminar.classList.remove('oculto');
@@ -195,5 +188,4 @@ btnConfEliminar.addEventListener('click', async () => {
     }
 });
 
-// ── INICIALIZACIÓN ────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', cargarTabla);
