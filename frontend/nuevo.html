@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nuevo Distrito</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <div class="container small">
+    <h1>➕ Nuevo Distrito</h1>
+
+    <div class="form-group">
+      <label>Nombre del Distrito:</label>
+      <input type="text" id="nom_dis" placeholder="Ej: Miraflores" />
+    </div>
+
+    <div class="form-group">
+      <label>Código Postal:</label>
+      <input type="text" id="cod_postal" placeholder="Ej: L18" />
+    </div>
+
+    <div class="form-group">
+      <label>Supervisor:</label>
+      <input type="text" id="supervisor" placeholder="Ej: Mariano Cervares" />
+    </div>
+
+    <div class="form-group">
+      <label>Población:</label>
+      <input type="text" id="poblacion" placeholder="Ej: 23215423" />
+    </div>
+
+    <div id="mensaje"></div>
+
+    <div class="form-btns">
+      <button id="btnRegistrar" class="btn btn-primary">Registrar</button>
+      <a href="/index.html" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </div>
+
+  <script type="module" src="/js/nuevo.js"></script>
+</body>
+</html>

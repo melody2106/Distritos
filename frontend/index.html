@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Distritos</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- Importamos Inter para que se vea moderno -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+  <!-- Encabezado con Título y Switch alineados -->
+  <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+    <h1 style="margin-bottom: 0;">📍 Gestión de Distritos</h1>
+    
+    <button id="theme-toggle" class="btn btn-secondary">
+      <span id="theme-icon">🌙</span> <span id="theme-text">Modo Oscuro</span>
+    </button>
+  </header>
+
+  <div class="toolbar">
+    <input type="text" id="buscador" placeholder="Buscar por ID, nombre o código postal..." />
+    <a href="/nuevo.html" class="btn btn-primary">+ Nuevo Distrito</a>
+  </div>
+
+    <div class="table-container">
+      <table id="tabla">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cód. Postal</th>
+            <th>Supervisor</th>
+            <th>Población</th>
+            <th style="text-align: center;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- Paginación -->
+    <div class="paginacion">
+      <button id="btnAnterior" class="btn btn-primary">← Anterior</button>
+      <span id="infoPagina" style="font-weight: 600; color: var(--text-muted);"></span>
+      <button id="btnSiguiente" class="btn btn-primary">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- Modal editar -->
+  <div id="modal" class="modal oculto">
+    <div class="modal-box">
+      <h2>Editar Distrito</h2>
+      <input type="hidden" id="edit-id" />
+      <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" id="edit-nom" />
+      </div>
+      <div class="form-group">
+        <label>Cód. Postal:</label>
+        <input type="text" id="edit-cod" />
+      </div>
+      <div class="form-group">
+        <label>Supervisor:</label>
+        <input type="text" id="edit-supervisor" />
+      </div>
+      <div class="form-group">
+        <label>Población:</label>
+        <input type="text" id="edit-poblacion" />
+      </div>
+      <div class="modal-btns">
+        <button id="btnGuardar" class="btn btn-primary">Guardar</button>
+        <button id="btnCancelar" class="btn btn-secondary">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Confirmación de Eliminación -->
+  <div id="modal-eliminar" class="modal oculto">
+    <div class="modal-box" style="text-align: center;">
+      <div style="font-size: 3rem; color: var(--danger); margin-bottom: 10px;">⚠️</div>
+      <h2>¿Estás seguro?</h2>
+      <p style="color: var(--text-muted); margin-bottom: 20px;">Esta acción no se puede deshacer. El distrito será eliminado permanentemente.</p>
+      <div class="modal-btns">
+        <button id="confirmar-eliminar" class="btn" style="background: var(--danger); color: white;">Eliminar</button>
+        <button id="cancelar-eliminar" class="btn btn-secondary">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

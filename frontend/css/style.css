@@ -1,0 +1,229 @@
+/* 1. CONFIGURACIÓN DE COLORES (MODO CLARO POR DEFECTO) */
+:root {
+  --primary: #4361ee;
+  --primary-hover: #3a56d4;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --success: #10b981;
+  
+  /* Variables de superficie y texto */
+  --bg: #f8fafc;
+  --container-bg: #ffffff;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --table-head: #f1f5f9;
+  --table-hover: #f8fafc;
+  --modal-overlay: rgba(15, 23, 42, 0.6);
+  --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* 2. SOBREESCRITURA PARA MODO OSCURO */
+body.dark-mode {
+  --bg: #0f172a;
+  --container-bg: #1e293b;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  --table-head: #425168;
+  --table-hover: #334155;
+  --modal-overlay: rgba(0, 0, 0, 0.8);
+  --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+/* 3. ESTILOS BASE */
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-main);
+  line-height: 1.5;
+  transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+.container {
+  max-width: 1000px;
+  margin: 45px auto;
+  background: var(--container-bg);
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.container.small { max-width: 500px; }
+
+h1 { 
+  font-size: 1.8rem; 
+  font-weight: 700;
+  margin-bottom: 25px; 
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 4. TOOLBAR & BUSCADOR */
+.toolbar {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.toolbar input {
+  flex: 1;
+  padding: 12px 18px;
+  background-color: var(--container-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.toolbar input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+}
+
+/* 5. TABLA ESTILIZADA */
+.table-container { 
+  overflow-x: auto; 
+  border-radius: 12px; 
+  border: 1px solid var(--border); 
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th {
+  background: var(--table-head);
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  padding: 15px;
+}
+
+td { 
+  padding: 15px; 
+  border-bottom: 1px solid var(--border); 
+  font-size: 0.95rem; 
+}
+
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--table-hover); }
+
+/* 6. BOTONES */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  gap: 8px;
+}
+
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+
+.btn-secondary { 
+  background: var(--border); 
+  color: var(--text-main); 
+}
+.btn-secondary:hover { opacity: 0.8; }
+
+.btn-edit { background: #fef3c7; color: #d97706; padding: 6px 12px; }
+body.dark-mode .btn-edit { background: #453008; color: #fbbf24; }
+
+.btn-delete { background: #fee2e2; color: #dc2626; padding: 6px 12px; }
+body.dark-mode .btn-delete { background: #450a0a; color: #f87171; }
+
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* 7. FORMULARIOS */
+.form-group { margin-bottom: 20px; }
+.form-group label { 
+  display: block; 
+  margin-bottom: 8px; 
+  font-weight: 500; 
+  color: var(--text-muted); 
+}
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--bg);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* 8. MODALES */
+.modal {
+  position: fixed; 
+  inset: 0;
+  background: var(--modal-overlay);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.3s;
+}
+
+.modal.oculto { display: none; }
+
+.modal-box {
+  background: var(--container-bg);
+  color: var(--text-main);
+  padding: 32px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  animation: modalIn 0.3s ease-out;
+}
+
+@keyframes modalIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-box h2 { font-size: 1.4rem; margin-bottom: 20px; }
+.modal-btns { display: flex; gap: 12px; margin-top: 25px; }
+.modal-btns button { flex: 1; }
+
+/* 9. PAGINACIÓN */
+.paginacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* 10. SWITCH MODO OSCURO (OPCIONAL) */
+.theme-switch-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
